@@ -40,11 +40,14 @@ const mutation2: MutationResult<boolean> = new Success(true);
 const mutation3: MutationResult<boolean> = new Failure({ messages: ['test message'] });
 
 // 型判定が変わってエラーになるようになった？？
-// でも確かに普通に構文解釈すると<true>はおかしい
-// NG。
+// でも確かに普通に構文解釈すると<true>はおかしい。NG。
 const mutation4: MutationResult<true> = new Success(true);
 
-// こっちは通る。Failureの時はMutationResultの第一型引数は利用しないから？？
-// OK。
+// こっちは通る。Failureの時はMutationResultの第一型引数は利用しないから？？OK。
 const mutation5: MutationResult<true> = new Failure({ messages: ['test message'] });
+// これも上記と同じ。第一型引数は使わないから関係ないのか？。OK
+const mutation6: MutationResult = new Failure({ messages: ['test message'] });
+
+// NG。どうも`true`は型引数推論してくれない？booleanにならない？
+const mutation7: MutationResult = new Success(true);
 
