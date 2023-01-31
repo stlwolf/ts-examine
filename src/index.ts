@@ -51,3 +51,19 @@ const mutation6: Result = new Failure({ messages: ['test message'] });
 // NG。どうも`true`は型引数推論してくれない？booleanにならない？
 const mutation7: Result = new Success(true);
 
+const okFunc = async (flag: boolean): Promise<Result<boolean>> => {
+  if (flag) {
+      return new Success(true);
+  }
+  return new Failure({ messages: ['error message'] });
+};
+
+// ts 3.6.4 だと通るが、4.2.4だとビルドエラーになる
+const errFunc = async (flag: boolean): Promise<Result<true>> => {
+  if (flag) {
+      return new Success(true);
+  }
+  return new Failure({ messages: ['error message'] });
+};
+
+
